@@ -20,5 +20,6 @@ public class Menu {
 	public String altaVenta(){
 		return "usr/alta-venta?faces-redirect=true";
 	}
+	public String altaPago() { return  "usr/alta-pago?faces-redirect=true"; }
 
 }

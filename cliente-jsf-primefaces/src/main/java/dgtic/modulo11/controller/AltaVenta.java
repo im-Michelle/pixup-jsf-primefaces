@@ -118,10 +118,7 @@ public class AltaVenta implements Serializable {
     }
 
     public void salvar() {
-        //asignamos venta a usuario
         this.venta.setUsuario(this.selecionUsuario);
-
-        // Llamar al servicio REST para guardar la venta
         Client cliente = ClientBuilder.newClient();
         WebTarget rootUri = cliente.target("http://localhost:8080/rest-pixup/api/venta/");
         Entity<Venta> entity = Entity.entity(venta, MediaType.APPLICATION_JSON);
@@ -130,13 +127,10 @@ public class AltaVenta implements Serializable {
                 .request(MediaType.APPLICATION_JSON)
                 .post(Entity.json(venta), Venta.class);
 
-        // Mostrar un mensaje de éxito
         FacesMessage msg = new FacesMessage("Venta guardada con éxito");
         FacesContext.getCurrentInstance().addMessage(null, msg);
 
         cliente.close();
     }
-
-
 
 }
