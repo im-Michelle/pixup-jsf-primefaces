@@ -13,7 +13,6 @@ public class Usuario implements Serializable {
     private String password;
     private String email;
     private String rfc;
-    private List<Venta> ventas;
 
     public Integer getId() {
         return id;
@@ -70,11 +69,6 @@ public class Usuario implements Serializable {
     public void setRfc(String rfc) {
         this.rfc = rfc;
     }
-
-    public void colocarVenta(Venta nuevaVenta) {
-        this.ventas.add(nuevaVenta);
-    }
-
     @Override
     public String toString() {
         return "Usuario{" +

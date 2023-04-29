@@ -26,31 +26,26 @@ import java.util.List;
 @Named("altaventa")
 @ViewScoped
 public class AltaVenta implements Serializable {
-    private boolean skip;
     private String filtro;
     private List<Usuario> datos;
-    private Usuario seleccionUsuario;
-    private Venta venta = new Venta();
+
+    private Usuario selecionUsuario;
+    private Venta venta;
 
     @PostConstruct
     public void init() {
         datos = new ArrayList<>();
-    }
-
-    public Venta getVenta() {
-        return venta;
-    }
-
-    public void setVenta(Venta venta) {
-        this.venta = venta;
+        venta = new Venta();
     }
 
     public String buscarUsuario() {
         if (filtro.length() >= 3) {
             Client cliente = ClientBuilder.newClient();
             WebTarget rootUri = cliente.target("http://localhost:8080/rest-pixup/api/usuario/filtro/").path(filtro);
-            List<Usuario> datos = rootUri.request(MediaType.APPLICATION_JSON).get(new GenericType<List<Usuario>>() {});
+            List<Usuario> datos = rootUri.request(MediaType.APPLICATION_JSON).get(Response.class)
+                    .readEntity(new GenericType<List<Usuario>>() {});
             this.datos = new ArrayList<>(datos);
+
             cliente.close();
             System.out.println(this.datos.get(0).toString());
         }
@@ -60,15 +55,40 @@ public class AltaVenta implements Serializable {
     public void onRowSelect(SelectEvent<Usuario> event) {
         FacesMessage msg = new FacesMessage("Usuario seleccionado", String.valueOf(event.getObject().getNombre()));
         FacesContext.getCurrentInstance().addMessage(null, msg);
-        seleccionUsuario = event.getObject();
+        this.selecionUsuario = event.getObject();
     }
 
     public void onRowUnselect(UnselectEvent<Usuario> event) {
         FacesMessage msg = new FacesMessage("Usuario cancelado", String.valueOf(event.getObject().getNombre()));
         FacesContext.getCurrentInstance().addMessage(null, msg);
-        seleccionUsuario = null;
+        this.selecionUsuario = null;
     }
 
+    public String guardarVenta() {
+        if (selecionUsuario != null) {
+            venta.setUsuario(selecionUsuario);
+            // Setear los demás atributos de la venta según la lógica de tu aplicación
+            // ...
+
+            // Guardar la venta en el servidor REST
+            Client cliente = ClientBuilder.newClient();
+            WebTarget rootUri = cliente.target("http://localhost:8080/rest-pixup/api/venta");
+            Response response = rootUri.request(MediaType.APPLICATION_JSON).post(Entity.json(venta));
+
+            if (response.getStatus() == 201) {
+                FacesMessage msg = new FacesMessage("Venta creada", "La venta ha sido creada exitosamente");
+                FacesContext.getCurrentInstance().addMessage(null, msg);
+            } else {
+                FacesMessage msg = new FacesMessage("Error", "Ha ocurrido un error al crear la venta");
+                FacesContext.getCurrentInstance().addMessage(null, msg);
+            }
+            cliente.close();
+        } else {
+            FacesMessage msg = new FacesMessage("Error", "Debe seleccionar un usuario antes de guardar la venta");
+            FacesContext.getCurrentInstance().addMessage(null, msg);
+        }
+        return null;
+    }
 
     public String getFiltro() {
         return filtro;
@@ -86,46 +106,19 @@ public class AltaVenta implements Serializable {
         this.datos = datos;
     }
 
-    public Usuario getSeleccionUsuario() {
-        return seleccionUsuario;
+    public Usuario getSelecionUsuario() {
+        return selecionUsuario;
     }
 
-    public void setSeleccionUsuario(Usuario seleccionUsuario) {
-        this.seleccionUsuario = seleccionUsuario;
+    public void setSelecionUsuario(Usuario selecionUsuario) {
+        this.selecionUsuario = selecionUsuario;
     }
 
-    public String onFlowProcess(FlowEvent event) {
-        if (skip) {
-            skip = false; //reset in case user goes back
-            return "confirmar";
-        } else {
-            //registramos usuario a venta
-            if (event.getNewStep().equals("Venta")) {
-                this.venta.setUsuario(this.seleccionUsuario);
-            }
-            return event.getNewStep();
-        }
+    public Venta getVenta() {
+        return venta;
     }
 
-    public boolean isSkip() {
-        return skip;
-    }
-
-    public void setSkip(boolean skip) {
-        this.skip = skip;
-    }
-
-    public void salvar() {
-        Client cliente = ClientBuilder.newClient();
-        WebTarget rootUri = cliente.target("http://localhost:8080/rest-pixup/api/venta/");
-        Venta nuevaVenta = rootUri.path("salvar").request(MediaType.APPLICATION_JSON)
-                .post(Entity.json(this.venta), Venta.class);
-        this.seleccionUsuario.colocarVenta(nuevaVenta);
-        System.out.println(this.seleccionUsuario.getNombre());
-        System.out.println(this.seleccionUsuario.getEmail());
-        System.out.println(this.seleccionUsuario.getRfc());
-        FacesMessage msg = new FacesMessage("Se pudo realizar");
-        FacesContext.getCurrentInstance().addMessage(null, msg);
-        cliente.close();
+    public void setVenta(Venta venta) {
+        this.venta = venta;
     }
 }

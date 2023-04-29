@@ -30,27 +30,22 @@
                                              selectionMode="single"
                                              selection="#{altaventa.selecionUsuario}" rowKey="#{us.id}">
                                     <p:ajax event="rowSelect" listener="#{altaventa.onRowSelect}" update=":form:growl"/>
-                                    <p:ajax event="rowUnselect" listener="#{altaventa.onRowUnselect}" update=":form:growl"/>>
+                                    <p:ajax event="rowUnselect" listener="#{altaventa.onRowUnselect}" update=":form:growl"/>
                                     <p:column headerText="Nombre">
                                         <h:outputText value="#{us.nombre}"/>
                                     </p:column>
-
                                     <p:column headerText="Apellido Paterno">
                                         <h:outputText value="#{us.primerApellido}"/>
                                     </p:column>
-
                                     <p:column headerText="Apellido Materno">
                                         <h:outputText value="#{us.segundoApellido}"/>
                                     </p:column>
-
                                     <p:column headerText="Correo">
                                         <h:outputText value="#{us.email}"/>
                                     </p:column>
-
                                     <p:column headerText="RFC">
                                         <h:outputText value="#{us.rfc}"/>
                                     </p:column>
-
                                 </p:dataTable>
                             </div>
                         </p:panel>
