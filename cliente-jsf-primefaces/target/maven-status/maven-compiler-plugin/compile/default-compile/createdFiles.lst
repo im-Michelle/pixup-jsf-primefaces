@@ -6,9 +6,11 @@ dgtic\modulo11\modelo\Usuario.class
 dgtic\modulo11\controller\AltaUsuario$1.class
 dgtic\modulo11\controller\AltaUsuario$2.class
 dgtic\modulo11\controller\Inicio$1.class
+dgtic\modulo11\modelo\Venta.class
 dgtic\modulo11\modelo\Estado.class
 dgtic\modulo11\modelo\TipoDomicilio.class
 dgtic\modulo11\controller\Vistas.class
+dgtic\modulo11\modelo\Pago.class
 dgtic\modulo11\controller\AltaUsuario$3.class
 dgtic\modulo11\controller\AltaUsuario.class
 dgtic\modulo11\controller\AltaUsuario$5.class

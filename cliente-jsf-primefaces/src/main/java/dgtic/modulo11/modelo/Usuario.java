@@ -1,6 +1,9 @@
 package dgtic.modulo11.modelo;
 
+import jakarta.validation.constraints.NotNull;
+
 import java.io.Serializable;
+import java.util.List;
 
 public class Usuario implements Serializable {
     private Integer id;
@@ -10,6 +13,7 @@ public class Usuario implements Serializable {
     private String password;
     private String email;
     private String rfc;
+    private List<Venta> ventas;
 
     public Integer getId() {
         return id;
@@ -65,6 +69,10 @@ public class Usuario implements Serializable {
 
     public void setRfc(String rfc) {
         this.rfc = rfc;
+    }
+
+    public void colocarVenta(Venta nuevaVenta) {
+        this.ventas.add(nuevaVenta);
     }
 
     @Override

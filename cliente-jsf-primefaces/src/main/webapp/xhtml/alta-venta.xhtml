@@ -55,6 +55,62 @@
                             </div>
                         </p:panel>
                     </p:tab>
+                    <p:tab id="Venta" title="Venta">
+                        <p:panel header="Datos de la Venta">
+                            <p:messages/>
+                            <h:panelGrid columns="2" columnClasses="label, value">
+                                <h:outputText value="Costo Total: *"/>
+                                <p:inputText value="#{altaventa.venta.costoTotal}" required="true" label="costoTotal"/>
+
+                                <h:outputText value="Fecha: *"/>
+                                <p:calendar id="fecha" value="#{altaventa.venta.fecha}" required="true"
+                                            label="Fecha" showOn="button" navigator="true"
+                                            pattern="dd/MM/yyyy" locale="es"/>
+
+                                <h:outputText value="Cantidad Total: *"/>
+                                <p:inputText value="#{altaventa.venta.cantidadTotal}" required="true"
+                                             label="cantidadTotal"/>
+
+                                <h:outputText value="Estatus Envio: *"/>
+                                <p:inputText value="#{altaventa.venta.estatusEnvio}" required="true" label="estatusEnvio"/>
+
+                                <h:outputText value="Costo envio: *"/>
+                                <p:inputText value="#{altaventa.venta.costoEnvio}" required="true" label="costoEnvio"/>
+
+                            </h:panelGrid>
+                        </p:panel>
+                    </p:tab>
+                    <p:tab id="confirmar" title="Confirmación">
+                        <p:panel header="Confirmation">
+                            <h:panelGrid id="confirmacion" columns="1" columnClasses="grid,grid,grid">
+                                <h:panelGrid columns="2" columnClasses="label, value">
+                                    <h:outputText value="Costo Total: *"/>
+                                    <h:outputText value="#{altaventa.venta.costoTotal}" styleClass="outputLabel"/>
+                                    <h:outputText value="Fecha: *"/>
+                                    <h:outputText value="#{altaventa.venta.fecha}" styleClass="outputLabel"/>
+                                    <h:outputText value="Cantidad Total: *"/>
+                                    <h:outputText value="#{altaventa.venta.cantidadTotal}" styleClass="outputLabel"/>
+                                    <h:outputText value="Estatus de Envío: *"/>
+                                    <h:outputText value="#{altaventa.venta.estatusEnvio}" styleClass="outputLabel"/>
+                                    <h:outputText value="Costo de Envío: *"/>
+                                    <h:outputText value="#{altaventa.venta.costoEnvio}" styleClass="outputLabel"/>
+                                </h:panelGrid>
+                                <h:panelGrid columns="2" columnClasses="label, value">
+                                    <h:outputText value="Nombre de Usuario: *"/>
+                                    <h:outputText value="#{altaventa.seleccionUsuario.nombre}" styleClass="outputLabel"/>
+                                    <h:outputText value="Primer Apellido de Usuario: *"/>
+                                    <h:outputText value="#{altaventa.seleccionUsuario.primerApellido}" styleClass="outputLabel"/>
+                                    <h:outputText value="Segundo Apellido de Usuario: *"/>
+                                    <h:outputText value="#{altaventa.seleccionUsuario.segundoApellido}" styleClass="outputLabel"/>
+                                    <h:outputText value="Email de Usuario: *"/>
+                                    <h:outputText value="#{altaventa.seleccionUsuario.email}" styleClass="outputLabel"/>
+                                    <h:outputText value="RFC de Usuario: *"/>
+                                    <h:outputText value="#{altaventa.seleccionUsuario.rfc}" styleClass="outputLabel"/>
+                                </h:panelGrid>
+                            </h:panelGrid>
+                            <p:commandButton value="Salvar" action="#{altaventa.salvar}" update="growl" process="@this"/>
+                        </p:panel>
+                    </p:tab>
                 </p:wizard>
             </h:form>
         </div>
