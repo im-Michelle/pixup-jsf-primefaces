@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:p="http://primefaces.org/ui">
+<f:view contentType="text/html;charset=UTF-8" encoding="UTF-8">
+    <h:head>
+        <title>Registrar Usuario</title>
+    </h:head>
+    <h:body>
+        <div class="card">
+            <h:form>
+                <p:growl id="growl" sticky="true" showDetail="true"/>
+                <p:wizard flowListener="#{usuarioalta.onFlowProcess}">
+                    <p:tab id="Usuario" title="Usuario">
+                        <p:panel header="Datos del Usuario">
+                            <p:messages/>
+                            <h:panelGrid columns="2" columnClasses="label, value">
+                                <h:outputText value="Nombre: *"/>
+                                <p:inputText value="#{usuarioalta.usuario.nombre}" required="true" label="Nombre"/>
+
+                                <h:outputText value="Primer Apellido: *"/>
+                                <p:inputText value="#{usuarioalta.usuario.primerApellido}" required="true"
+                                             label="Primer Apellido"/>
+
+                                <h:outputText value="Segundo Apellido: *"/>
+                                <p:inputText value="#{usuarioalta.usuario.segundoApellido}" required="true"
+                                             label="Segundo Apellido"/>
+
+                                <h:outputText value="Password: *"/>
+                                <p:inputText value="#{usuarioalta.usuario.password}" required="true" label="Password"/>
+
+                                <h:outputText value="Email: *"/>
+                                <p:inputText value="#{usuarioalta.usuario.email}" required="true" label="Email"/>
+
+                                <h:outputText value="RFC: *"/>
+                                <p:inputText value="#{usuarioalta.usuario.rfc}" required="true" label="RFC"/>
+
+                            </h:panelGrid>
+                        </p:panel>
+                    </p:tab>
+                    <p:tab id="Domicilio" title="Domicilio">
+                        <p:panel header="Detalles del Domicilio">
+                            <p:messages/>
+                            <h:panelGrid columns="2" columnClasses="label, value">
+                                <h:outputText value="Calle: *"/>
+                                <p:inputText value="#{usuarioalta.domicilio.calle}" required="true"/>
+                                <h:outputText value="Numero Exterior: *"/>
+                                <p:inputText value="#{usuarioalta.domicilio.numExterior}" required="true"
+                                             label="Numero Exterior"/>
+                                <h:outputText value="Numero Interior: *"/>
+                                <p:inputText value="#{usuarioalta.domicilio.numInterior}" required="true"
+                                             label="Numero Interior"/>
+                                <p:outputLabel for="estado" value="Estado: "/>
+                                <p:selectOneMenu id="estado" value="#{usuarioalta.estadoSeleccionado}"
+                                                 style="width:350px">
+                                    <p:ajax listener="#{usuarioalta.onEstadoChange}" update="municipio"/>
+                                    <f:selectItem itemLabel="Selecciona el Estado" itemValue=""
+                                                  noSelectionOption="true"/>
+                                    <f:selectItems value="#{usuarioalta.estado}"/>
+                                </p:selectOneMenu>
+                                <p:outputLabel for="municipio" value="Municipio: "/>
+                                <p:selectOneMenu id="municipio" value="#{usuarioalta.municipioSeleccionado}"
+                                                 style="width:350px">
+                                    <p:ajax listener="#{usuarioalta.onMunicipioChange}" update="colonia"/>
+                                    <f:selectItem itemLabel="Selecciona el Municipio" itemValue=""
+                                                  noSelectionOption="true"/>
+                                    <f:selectItems value="#{usuarioalta.municipio}"/>
+                                </p:selectOneMenu>
+                                <p:outputLabel for="colonia" value="Colonia: "/>
+                                <p:selectOneMenu id="colonia" value="#{usuarioalta.coloniaSeleccionado}"
+                                                 style="width:350px">
+                                    <p:ajax listener="#{usuarioalta.onColoniaChange}" update="tipodomicilio"/>
+                                    <f:selectItem itemLabel="Selecciona la Colonia" itemValue=""
+                                                  noSelectionOption="true"/>
+                                    <f:selectItems value="#{usuarioalta.colonia}"/>
+                                </p:selectOneMenu>
+                                <p:outputLabel for="tipodomicilio" value="Tipo Domicilio: "/>
+                                <p:selectOneMenu id="tipodomicilio" value="#{usuarioalta.tipoDomicilioSeleccionado}"
+                                                 style="width:350px">
+                                    <p:ajax listener="#{usuarioalta.ontipoDomicilioChange}"/>
+                                    <f:selectItem itemLabel="Selecciona tipo Domicilio" itemValue=""
+                                                  noSelectionOption="true"/>
+                                    <f:selectItems value="#{usuarioalta.tipoDomicilio}"/>
+                                </p:selectOneMenu>
+                            </h:panelGrid>
+                        </p:panel>
+                    </p:tab>
+                    <p:tab id="confirmar" title="Confirmación">
+                        <p:panel header="Confirmation">
+                            <h:panelGrid id="confirmacion" columns="1" columnClasses="grid,grid,grid">
+                                <h:panelGrid columns="2" columnClasses="label, value">
+                                    <h:outputText value="Nombre: *"/>
+                                    <h:outputText value="#{usuarioalta.usuario.nombre}" styleClass="outputLabel"/>
+                                    <h:outputText value="Primer Apellido: *"/>
+                                    <h:outputText value="#{usuarioalta.usuario.primerApellido}" styleClass="outputLabel"/>
+                                    <h:outputText value="Segundo Apellido: *"/>
+                                    <h:outputText value="#{usuarioalta.usuario.segundoApellido}" styleClass="outputLabel"/>
+                                    <h:outputText value="Password: *"/>
+                                    <h:outputText value="#{usuarioalta.usuario.password}" styleClass="outputLabel"/>
+                                    <h:outputText value="Email: *"/>
+                                    <h:outputText value="#{usuarioalta.usuario.email}" styleClass="outputLabel"/>
+                                    <h:outputText value="RFC: *"/>
+                                    <h:outputText value="#{usuarioalta.usuario.rfc}" styleClass="outputLabel"/>
+                                </h:panelGrid>
+                                <h:panelGrid columns="2" columnClasses="label, value">
+                                    <h:outputText value="Calle: *"/>
+                                    <h:outputText value="#{usuarioalta.domicilio.calle}" styleClass="outputLabel"/>
+                                    <h:outputText value="Número Exterior: *"/>
+                                    <h:outputText value="#{usuarioalta.domicilio.numExterior}" styleClass="outputLabel"/>
+                                    <h:outputText value="Número Interior: *"/>
+                                    <h:outputText value="#{usuarioalta.domicilio.numInterior}" styleClass="outputLabel"/>
+                                    <h:outputText value="Estado: *"/>
+                                    <h:outputText value="#{usuarioalta.domicilio.colonia.municipio.estado.nombre}" styleClass="outputLabel"/>
+                                    <h:outputText value="Municipio: *"/>
+                                    <h:outputText value="#{usuarioalta.domicilio.colonia.municipio.nombre}" styleClass="outputLabel"/>
+                                    <h:outputText value="Colonia: *"/>
+                                    <h:outputText value="#{usuarioalta.domicilio.colonia.nombre}" styleClass="outputLabel"/>
+                                    <h:outputText value="Tipo Domicilio: *"/>
+                                    <h:outputText value="#{usuarioalta.domicilio.tipoDomicilio.descripcion}" styleClass="outputLabel"/>
+                                </h:panelGrid>
+                            </h:panelGrid>
+                            <p:commandButton value="Salvar" action="#{usuarioalta.salvar}" update="growl" process="@this"/>
+                        </p:panel>
+                    </p:tab>
+                </p:wizard>
+            </h:form>
+        </div>
+        <div>
+            <h:form>
+                <p:dock position="bottom">
+                    <p:menuitem value="Home"
+                                url="home.jsf"
+                                action="#{menu.home}"
+                                icon="/resources/tema1/img/icon/home.png"/>
+                    <p:menuitem value="Usuario Alta"
+                                url="alta-usuario.jsf"
+                                action="#{menu.altaUsuario}"
+                                icon="/resources/tema1/img/icon/lista.png"/>
+                    <p:menuitem value="Venta Alta"
+                                url="alta-venta.jsf"
+                                action="#{menu.altaVenta}"
+                                icon="/resources/tema1/img/icon/carrito.png"/>
+                </p:dock>
+            </h:form>
+        </div>
+    </h:body>
+</f:view>
+</html>

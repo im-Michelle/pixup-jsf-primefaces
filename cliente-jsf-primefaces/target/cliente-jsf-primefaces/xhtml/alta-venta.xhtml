@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:p="http://primefaces.org/ui">
+<f:view contentType="text/html;charset=UTF-8" encoding="UTF-8">
+    <h:head>
+        <title>Registrar Venta</title>
+    </h:head>
+    <h:body>
+        <div class="card">
+            <h:form id="form">
+                <p:growl id="growl" showDetail="true" skipDetailIfEqualsSummary="true"/>
+                <p:wizard flowListener="#{usuarioalta.onFlowProcess}">
+                    <p:tab id="Usuario" title="Lista Usuario">
+                        <p:panel header="Buscar Usuario">
+                            <p:messages/>
+                            <h:panelGrid columns="2" columnClasses="label, value">
+                                <h:outputText value="Buscar por Nombre: *"/>
+                                <p:inputText id="filtro" value="#{altaventa.filtro}" required="true"/>
+                                <p:commandButton id="mandar" value="Buscar"
+                                                 partialSubmit="true"
+                                                 process="filtro mandar"
+                                                 action="#{altaventa.buscarUsuario}"
+                                                 update=":form:basicDT"/>
+                            </h:panelGrid>
+                            <div class="card">
+                                <p:dataTable id="basicDT" var="us" value="#{altaventa.datos}"
+                                             selectionMode="single"
+                                             selection="#{altaventa.selecionUsuario}" rowKey="#{us.id}">
+                                    <p:ajax event="rowSelect" listener="#{altaventa.onRowSelect}" update=":form:growl"/>
+                                    <p:ajax event="rowUnselect" listener="#{altaventa.onRowUnselect}" update=":form:growl"/>>
+                                    <p:column headerText="Nombre">
+                                        <h:outputText value="#{us.nombre}"/>
+                                    </p:column>
+
+                                    <p:column headerText="Apellido Paterno">
+                                        <h:outputText value="#{us.primerApellido}"/>
+                                    </p:column>
+
+                                    <p:column headerText="Apellido Materno">
+                                        <h:outputText value="#{us.segundoApellido}"/>
+                                    </p:column>
+
+                                    <p:column headerText="Correo">
+                                        <h:outputText value="#{us.email}"/>
+                                    </p:column>
+
+                                    <p:column headerText="RFC">
+                                        <h:outputText value="#{us.rfc}"/>
+                                    </p:column>
+
+                                </p:dataTable>
+                            </div>
+                        </p:panel>
+                    </p:tab>
+                </p:wizard>
+            </h:form>
+        </div>
+        <div>
+            <h:form>
+                <p:dock position="bottom">
+                    <p:menuitem value="Home"
+                                url="home.jsf"
+                                action="#{menu.home}"
+                                icon="/resources/tema1/img/icon/home.png"/>
+                    <p:menuitem value="Usuario Alta"
+                                url="alta-usuario.jsf"
+                                action="#{menu.altaUsuario}"
+                                icon="/resources/tema1/img/icon/lista.png"/>
+                    <p:menuitem value="Venta Alta"
+                                url="alta-venta.jsf"
+                                action="#{menu.altaVenta}"
+                                icon="/resources/tema1/img/icon/carrito.png"/>
+                </p:dock>
+            </h:form>
+        </div>
+    </h:body>
+</f:view>
+</html>

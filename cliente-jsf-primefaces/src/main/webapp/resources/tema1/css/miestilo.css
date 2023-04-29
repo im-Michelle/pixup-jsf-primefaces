@@ -1,0 +1,31 @@
+/*
+To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+*/
+/* 
+    Created on : 25/09/2015, 11:06:49 AM
+    Author     : Administrador
+*/
+.sin-borde {
+	border-style: hidden !important;
+}
+
+.ui-growl {
+	z-index: 999999 !important;
+}
+
+
+.centro {
+	  display: flex;
+      justify-content: center;
+}
+.hijo {
+  width: 50px;
+  height: 50px;
+  background-color: red;
+  /* centrado vertical */
+  position: absolute;
+  top: 50%;
+  margin-top: -25px; /* (- menos) la mitad del valor de la altura del elemento hijo */
+}
