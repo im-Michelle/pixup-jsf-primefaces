@@ -3,6 +3,7 @@ package dgtic.modulo11.modelo;
 import jakarta.validation.constraints.NotNull;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.List;
 
 public class Usuario implements Serializable {
@@ -69,6 +70,7 @@ public class Usuario implements Serializable {
     public void setRfc(String rfc) {
         this.rfc = rfc;
     }
+
     @Override
     public String toString() {
         return "Usuario{" +

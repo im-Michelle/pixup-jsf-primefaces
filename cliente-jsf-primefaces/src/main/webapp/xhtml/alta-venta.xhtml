@@ -12,7 +12,7 @@
         <div class="card">
             <h:form id="form">
                 <p:growl id="growl" showDetail="true" skipDetailIfEqualsSummary="true"/>
-                <p:wizard flowListener="#{altaventa.onFlowProcess}">
+                <p:wizard flowListener="#{usuarioalta.onFlowProcess}">
                     <p:tab id="Usuario" title="Lista Usuario">
                         <p:panel header="Buscar Usuario">
                             <p:messages/>
@@ -30,22 +30,27 @@
                                              selectionMode="single"
                                              selection="#{altaventa.selecionUsuario}" rowKey="#{us.id}">
                                     <p:ajax event="rowSelect" listener="#{altaventa.onRowSelect}" update=":form:growl"/>
-                                    <p:ajax event="rowUnselect" listener="#{altaventa.onRowUnselect}" update=":form:growl"/>
+                                    <p:ajax event="rowUnselect" listener="#{altaventa.onRowUnselect}" update=":form:growl"/>>
                                     <p:column headerText="Nombre">
                                         <h:outputText value="#{us.nombre}"/>
                                     </p:column>
+
                                     <p:column headerText="Apellido Paterno">
                                         <h:outputText value="#{us.primerApellido}"/>
                                     </p:column>
+
                                     <p:column headerText="Apellido Materno">
                                         <h:outputText value="#{us.segundoApellido}"/>
                                     </p:column>
+
                                     <p:column headerText="Correo">
                                         <h:outputText value="#{us.email}"/>
                                     </p:column>
+
                                     <p:column headerText="RFC">
                                         <h:outputText value="#{us.rfc}"/>
                                     </p:column>
+
                                 </p:dataTable>
                             </div>
                         </p:panel>
@@ -79,31 +84,37 @@
                         <p:panel header="Confirmation">
                             <h:panelGrid id="confirmacion" columns="1" columnClasses="grid,grid,grid">
                                 <h:panelGrid columns="2" columnClasses="label, value">
-                                    <h:outputText value="Costo Total: *"/>
-                                    <h:outputText value="#{altaventa.venta.costoTotal}" styleClass="outputLabel"/>
-                                    <h:outputText value="Fecha: *"/>
-                                    <h:outputText value="#{altaventa.venta.fecha}" styleClass="outputLabel"/>
-                                    <h:outputText value="Cantidad Total: *"/>
-                                    <h:outputText value="#{altaventa.venta.cantidadTotal}" styleClass="outputLabel"/>
-                                    <h:outputText value="Estatus de Envío: *"/>
-                                    <h:outputText value="#{altaventa.venta.estatusEnvio}" styleClass="outputLabel"/>
-                                    <h:outputText value="Costo de Envío: *"/>
-                                    <h:outputText value="#{altaventa.venta.costoEnvio}" styleClass="outputLabel"/>
+                                    <h:outputText value="Nombre: *"/>
+                                    <h:outputText value="#{usuarioalta.usuario.nombre}" styleClass="outputLabel"/>
+                                    <h:outputText value="Primer Apellido: *"/>
+                                    <h:outputText value="#{usuarioalta.usuario.primerApellido}" styleClass="outputLabel"/>
+                                    <h:outputText value="Segundo Apellido: *"/>
+                                    <h:outputText value="#{usuarioalta.usuario.segundoApellido}" styleClass="outputLabel"/>
+                                    <h:outputText value="Password: *"/>
+                                    <h:outputText value="#{usuarioalta.usuario.password}" styleClass="outputLabel"/>
+                                    <h:outputText value="Email: *"/>
+                                    <h:outputText value="#{usuarioalta.usuario.email}" styleClass="outputLabel"/>
+                                    <h:outputText value="RFC: *"/>
+                                    <h:outputText value="#{usuarioalta.usuario.rfc}" styleClass="outputLabel"/>
                                 </h:panelGrid>
                                 <h:panelGrid columns="2" columnClasses="label, value">
-                                    <h:outputText value="Nombre de Usuario: *"/>
-                                    <h:outputText value="#{altaventa.seleccionUsuario.nombre}" styleClass="outputLabel"/>
-                                    <h:outputText value="Primer Apellido de Usuario: *"/>
-                                    <h:outputText value="#{altaventa.seleccionUsuario.primerApellido}" styleClass="outputLabel"/>
-                                    <h:outputText value="Segundo Apellido de Usuario: *"/>
-                                    <h:outputText value="#{altaventa.seleccionUsuario.segundoApellido}" styleClass="outputLabel"/>
-                                    <h:outputText value="Email de Usuario: *"/>
-                                    <h:outputText value="#{altaventa.seleccionUsuario.email}" styleClass="outputLabel"/>
-                                    <h:outputText value="RFC de Usuario: *"/>
-                                    <h:outputText value="#{altaventa.seleccionUsuario.rfc}" styleClass="outputLabel"/>
+                                    <h:outputText value="Calle: *"/>
+                                    <h:outputText value="#{usuarioalta.domicilio.calle}" styleClass="outputLabel"/>
+                                    <h:outputText value="Número Exterior: *"/>
+                                    <h:outputText value="#{usuarioalta.domicilio.numExterior}" styleClass="outputLabel"/>
+                                    <h:outputText value="Número Interior: *"/>
+                                    <h:outputText value="#{usuarioalta.domicilio.numInterior}" styleClass="outputLabel"/>
+                                    <h:outputText value="Estado: *"/>
+                                    <h:outputText value="#{usuarioalta.domicilio.colonia.municipio.estado.nombre}" styleClass="outputLabel"/>
+                                    <h:outputText value="Municipio: *"/>
+                                    <h:outputText value="#{usuarioalta.domicilio.colonia.municipio.nombre}" styleClass="outputLabel"/>
+                                    <h:outputText value="Colonia: *"/>
+                                    <h:outputText value="#{usuarioalta.domicilio.colonia.nombre}" styleClass="outputLabel"/>
+                                    <h:outputText value="Tipo Domicilio: *"/>
+                                    <h:outputText value="#{usuarioalta.domicilio.tipoDomicilio.descripcion}" styleClass="outputLabel"/>
                                 </h:panelGrid>
                             </h:panelGrid>
-                            <p:commandButton value="Salvar" action="#{altaventa.salvar}" update="growl" process="@this"/>
+                            <p:commandButton value="Salvar" action="#{usuarioalta.salvar}" update="growl" process="@this"/>
                         </p:panel>
                     </p:tab>
                 </p:wizard>

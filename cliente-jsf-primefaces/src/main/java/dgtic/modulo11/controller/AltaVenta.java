@@ -26,16 +26,19 @@ import java.util.List;
 @Named("altaventa")
 @ViewScoped
 public class AltaVenta implements Serializable {
+    private boolean skip;
     private String filtro;
     private List<Usuario> datos;
 
     private Usuario selecionUsuario;
     private Venta venta;
 
+    // Add a new property to indicate if the confirmation dialog should be shown
+    private boolean showConfirmation;
+
     @PostConstruct
     public void init() {
         datos = new ArrayList<>();
-        venta = new Venta();
     }
 
     public String buscarUsuario() {
@@ -62,6 +65,17 @@ public class AltaVenta implements Serializable {
         FacesMessage msg = new FacesMessage("Usuario cancelado", String.valueOf(event.getObject().getNombre()));
         FacesContext.getCurrentInstance().addMessage(null, msg);
         this.selecionUsuario = null;
+    }
+
+    public void confirmarVenta() {
+        venta = new Venta();
+        // Show the confirmation dialog
+        this.showConfirmation = true;
+    }
+
+    public void cancelarConfirmacion() {
+        // Hide the confirmation dialog
+        this.showConfirmation = false;
     }
 
     public String guardarVenta() {
