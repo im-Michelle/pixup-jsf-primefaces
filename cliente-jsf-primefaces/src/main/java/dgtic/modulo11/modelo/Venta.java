@@ -1,9 +1,10 @@
 package dgtic.modulo11.modelo;
 
+import java.io.Serializable;
 import java.security.Principal;
 import java.util.Date;
 
-public class Venta {
+public class Venta implements Serializable {
     private Integer id;
     private Float costoTotal;
     private Date fecha;
@@ -11,7 +12,6 @@ public class Venta {
     private Byte estatusEnvio;
     private Float costoEnvio;
     private Usuario usuario = new Usuario();
-    private Pago pago = new Pago();
 
     public Integer getId() {
         return id;
@@ -69,11 +69,15 @@ public class Venta {
         this.usuario = usuario;
     }
 
-    public Pago getPago() {
-        return pago;
-    }
-
-    public void setPago(Pago pago) {
-        this.pago = pago;
+    @Override
+    public String toString() {
+        return "Venta{" +
+                "id=" + id +
+                ", costoTotal=" + costoTotal +
+                ", fecha=" + fecha +
+                ", cantidadTotal=" + cantidadTotal +
+                ", estatusEnvio=" + estatusEnvio +
+                ", costoEnvio=" + costoEnvio +
+                '}';
     }
 }

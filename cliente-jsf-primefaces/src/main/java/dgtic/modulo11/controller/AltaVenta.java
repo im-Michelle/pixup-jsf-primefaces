@@ -31,77 +31,11 @@ public class AltaVenta implements Serializable {
     private List<Usuario> datos;
 
     private Usuario selecionUsuario;
-    private Venta venta;
-
-    // Add a new property to indicate if the confirmation dialog should be shown
-    private boolean showConfirmation;
+    private Venta venta = new Venta();
 
     @PostConstruct
     public void init() {
         datos = new ArrayList<>();
-    }
-
-    public String buscarUsuario() {
-        if (filtro.length() >= 3) {
-            Client cliente = ClientBuilder.newClient();
-            WebTarget rootUri = cliente.target("http://localhost:8080/rest-pixup/api/usuario/filtro/").path(filtro);
-            List<Usuario> datos = rootUri.request(MediaType.APPLICATION_JSON).get(Response.class)
-                    .readEntity(new GenericType<List<Usuario>>() {});
-            this.datos = new ArrayList<>(datos);
-
-            cliente.close();
-            System.out.println(this.datos.get(0).toString());
-        }
-        return null;
-    }
-
-    public void onRowSelect(SelectEvent<Usuario> event) {
-        FacesMessage msg = new FacesMessage("Usuario seleccionado", String.valueOf(event.getObject().getNombre()));
-        FacesContext.getCurrentInstance().addMessage(null, msg);
-        this.selecionUsuario = event.getObject();
-    }
-
-    public void onRowUnselect(UnselectEvent<Usuario> event) {
-        FacesMessage msg = new FacesMessage("Usuario cancelado", String.valueOf(event.getObject().getNombre()));
-        FacesContext.getCurrentInstance().addMessage(null, msg);
-        this.selecionUsuario = null;
-    }
-
-    public void confirmarVenta() {
-        venta = new Venta();
-        // Show the confirmation dialog
-        this.showConfirmation = true;
-    }
-
-    public void cancelarConfirmacion() {
-        // Hide the confirmation dialog
-        this.showConfirmation = false;
-    }
-
-    public String guardarVenta() {
-        if (selecionUsuario != null) {
-            venta.setUsuario(selecionUsuario);
-            // Setear los demás atributos de la venta según la lógica de tu aplicación
-            // ...
-
-            // Guardar la venta en el servidor REST
-            Client cliente = ClientBuilder.newClient();
-            WebTarget rootUri = cliente.target("http://localhost:8080/rest-pixup/api/venta");
-            Response response = rootUri.request(MediaType.APPLICATION_JSON).post(Entity.json(venta));
-
-            if (response.getStatus() == 201) {
-                FacesMessage msg = new FacesMessage("Venta creada", "La venta ha sido creada exitosamente");
-                FacesContext.getCurrentInstance().addMessage(null, msg);
-            } else {
-                FacesMessage msg = new FacesMessage("Error", "Ha ocurrido un error al crear la venta");
-                FacesContext.getCurrentInstance().addMessage(null, msg);
-            }
-            cliente.close();
-        } else {
-            FacesMessage msg = new FacesMessage("Error", "Debe seleccionar un usuario antes de guardar la venta");
-            FacesContext.getCurrentInstance().addMessage(null, msg);
-        }
-        return null;
     }
 
     public String getFiltro() {
@@ -135,4 +69,74 @@ public class AltaVenta implements Serializable {
     public void setVenta(Venta venta) {
         this.venta = venta;
     }
+
+    public String onFlowProcess(FlowEvent event) {
+        if (skip) {
+            skip = false; //reset in case user goes back
+            return "confirmar";
+        } else {
+            //asignamos venta a usuario
+            if (event.getNewStep().equals("Venta")) {
+                this.venta.setUsuario(this.selecionUsuario);
+            }
+            return event.getNewStep();
+        }
+    }
+    public boolean isSkip() {
+        return skip;
+    }
+
+    public void setSkip(boolean skip) {
+        this.skip = skip;
+    }
+
+
+    public void onRowSelect(SelectEvent<Usuario> event) {
+        FacesMessage msg = new FacesMessage("Usuario seleccionado", String.valueOf(event.getObject().getNombre()));
+        FacesContext.getCurrentInstance().addMessage(null, msg);
+        this.selecionUsuario = event.getObject();
+    }
+
+    public void onRowUnselect(UnselectEvent<Usuario> event) {
+        FacesMessage msg = new FacesMessage("Usuario cancelado", String.valueOf(event.getObject().getNombre()));
+        FacesContext.getCurrentInstance().addMessage(null, msg);
+        this.selecionUsuario = null;
+    }
+
+    public String buscarUsuario() {
+        if (filtro.length() >= 3) {
+            Client cliente = ClientBuilder.newClient();
+            WebTarget rootUri = cliente.target("http://localhost:8080/rest-pixup/api/usuario/filtro/").path(filtro);
+            List<Usuario> datos = rootUri.request(MediaType.APPLICATION_JSON).get(Response.class)
+                    .readEntity(new GenericType<List<Usuario>>() {});
+            this.datos = new ArrayList<>(datos);
+
+            cliente.close();
+            System.out.println(this.datos.get(0).toString());
+        }
+        return null;
+    }
+
+    public void salvar() {
+        //asignamos venta a usuario
+        this.venta.setUsuario(this.selecionUsuario);
+
+        // Llamar al servicio REST para guardar la venta
+        Client cliente = ClientBuilder.newClient();
+        WebTarget rootUri = cliente.target("http://localhost:8080/rest-pixup/api/venta/");
+        Entity<Venta> entity = Entity.entity(venta, MediaType.APPLICATION_JSON);
+        Venta nuevaVenta = rootUri
+                .path("salvar")
+                .request(MediaType.APPLICATION_JSON)
+                .post(Entity.json(venta), Venta.class);
+
+        // Mostrar un mensaje de éxito
+        FacesMessage msg = new FacesMessage("Venta guardada con éxito");
+        FacesContext.getCurrentInstance().addMessage(null, msg);
+
+        cliente.close();
+    }
+
+
+
 }

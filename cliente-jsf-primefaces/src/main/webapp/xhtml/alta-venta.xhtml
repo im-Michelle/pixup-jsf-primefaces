@@ -85,36 +85,30 @@
                             <h:panelGrid id="confirmacion" columns="1" columnClasses="grid,grid,grid">
                                 <h:panelGrid columns="2" columnClasses="label, value">
                                     <h:outputText value="Nombre: *"/>
-                                    <h:outputText value="#{usuarioalta.usuario.nombre}" styleClass="outputLabel"/>
+                                    <h:outputText value="#{altaventa.selecionUsuario.nombre}" styleClass="outputLabel"/>
                                     <h:outputText value="Primer Apellido: *"/>
-                                    <h:outputText value="#{usuarioalta.usuario.primerApellido}" styleClass="outputLabel"/>
+                                    <h:outputText value="#{altaventa.selecionUsuario.primerApellido}" styleClass="outputLabel"/>
                                     <h:outputText value="Segundo Apellido: *"/>
-                                    <h:outputText value="#{usuarioalta.usuario.segundoApellido}" styleClass="outputLabel"/>
-                                    <h:outputText value="Password: *"/>
-                                    <h:outputText value="#{usuarioalta.usuario.password}" styleClass="outputLabel"/>
+                                    <h:outputText value="#{altaventa.selecionUsuario.segundoApellido}" styleClass="outputLabel"/>
                                     <h:outputText value="Email: *"/>
-                                    <h:outputText value="#{usuarioalta.usuario.email}" styleClass="outputLabel"/>
+                                    <h:outputText value="#{altaventa.selecionUsuario.email}" styleClass="outputLabel"/>
                                     <h:outputText value="RFC: *"/>
-                                    <h:outputText value="#{usuarioalta.usuario.rfc}" styleClass="outputLabel"/>
+                                    <h:outputText value="#{altaventa.selecionUsuario.rfc}" styleClass="outputLabel"/>
                                 </h:panelGrid>
                                 <h:panelGrid columns="2" columnClasses="label, value">
-                                    <h:outputText value="Calle: *"/>
-                                    <h:outputText value="#{usuarioalta.domicilio.calle}" styleClass="outputLabel"/>
-                                    <h:outputText value="Número Exterior: *"/>
-                                    <h:outputText value="#{usuarioalta.domicilio.numExterior}" styleClass="outputLabel"/>
-                                    <h:outputText value="Número Interior: *"/>
-                                    <h:outputText value="#{usuarioalta.domicilio.numInterior}" styleClass="outputLabel"/>
-                                    <h:outputText value="Estado: *"/>
-                                    <h:outputText value="#{usuarioalta.domicilio.colonia.municipio.estado.nombre}" styleClass="outputLabel"/>
-                                    <h:outputText value="Municipio: *"/>
-                                    <h:outputText value="#{usuarioalta.domicilio.colonia.municipio.nombre}" styleClass="outputLabel"/>
-                                    <h:outputText value="Colonia: *"/>
-                                    <h:outputText value="#{usuarioalta.domicilio.colonia.nombre}" styleClass="outputLabel"/>
-                                    <h:outputText value="Tipo Domicilio: *"/>
-                                    <h:outputText value="#{usuarioalta.domicilio.tipoDomicilio.descripcion}" styleClass="outputLabel"/>
+                                    <h:outputText value="Costo Total: *"/>
+                                    <h:outputText value="#{altaventa.venta.costoTotal}" styleClass="outputLabel"/>
+                                    <h:outputText value="Fecha: *"/>
+                                    <h:outputText value="#{altaventa.venta.fecha}" styleClass="outputLabel"/>
+                                    <h:outputText value="Cantidad Total: *"/>
+                                    <h:outputText value="#{altaventa.venta.cantidadTotal}" styleClass="outputLabel"/>
+                                    <h:outputText value="Estatus Envio: *"/>
+                                    <h:outputText value="#{altaventa.venta.estatusEnvio}" styleClass="outputLabel"/>
+                                    <h:outputText value="Costo Envio: *"/>
+                                    <h:outputText value="#{altaventa.venta.costoEnvio}" styleClass="outputLabel"/>
                                 </h:panelGrid>
                             </h:panelGrid>
-                            <p:commandButton value="Salvar" action="#{usuarioalta.salvar}" update="growl" process="@this"/>
+                            <p:commandButton value="Salvar" action="#{altaventa.salvar}" update="growl" process="@this"/>
                         </p:panel>
                     </p:tab>
                 </p:wizard>

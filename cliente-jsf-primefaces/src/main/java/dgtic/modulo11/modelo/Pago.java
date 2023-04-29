@@ -1,8 +1,9 @@
 package dgtic.modulo11.modelo;
 
+import java.io.Serializable;
 import java.util.Date;
 
-public class Pago {
+public class Pago implements Serializable {
     private Integer id;
     private String numeroTarjeta;
     private Float monto;
