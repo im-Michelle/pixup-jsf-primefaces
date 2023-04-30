@@ -8,7 +8,6 @@ dgtic\modulo11\controller\AltaUsuario$2.class
 dgtic\modulo11\controller\Inicio$1.class
 dgtic\modulo11\modelo\Venta.class
 dgtic\modulo11\modelo\Estado.class
-dgtic\modulo11\controller\AltaPago$1.class
 dgtic\modulo11\modelo\TipoDomicilio.class
 dgtic\modulo11\controller\Vistas.class
 dgtic\modulo11\modelo\Pago.class
@@ -20,4 +19,3 @@ dgtic\modulo11\controller\Inicio.class
 dgtic\modulo11\modelo\Domicilio.class
 dgtic\modulo11\controller\AltaUsuario$4.class
 dgtic\modulo11\controller\AltaVenta.class
-dgtic\modulo11\controller\AltaPago.class

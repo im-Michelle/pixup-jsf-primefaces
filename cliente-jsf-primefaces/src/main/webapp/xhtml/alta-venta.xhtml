@@ -30,7 +30,7 @@
                                              selectionMode="single"
                                              selection="#{altaventa.selecionUsuario}" rowKey="#{us.id}">
                                     <p:ajax event="rowSelect" listener="#{altaventa.onRowSelect}" update=":form:growl"/>
-                                    <p:ajax event="rowUnselect" listener="#{altaventa.onRowUnselect}" update=":form:growl"/>>
+                                    <p:ajax event="rowUnselect" listener="#{altaventa.onRowUnselect}" update=":form:growl"/>
                                     <p:column headerText="Nombre">
                                         <h:outputText value="#{us.nombre}"/>
                                     </p:column>
@@ -80,6 +80,23 @@
                             </h:panelGrid>
                         </p:panel>
                     </p:tab>
+                    <p:tab id="Pago" title="Pago">
+                        <p:panel header="Datos del Pago">
+                            <p:messages/>
+                            <h:panelGrid columns="2" columnClasses="label, value">
+                                <h:outputText value="Número de tarjeta: *"/>
+                                <p:inputText value="#{altaventa.pago.numeroTarjeta}" required="true" label="Número de tarjeta"/>
+
+                                <h:outputText value="Monto: *"/>
+                                <p:inputText value="#{altaventa.pago.monto}" required="true" label="Monto"/>
+
+                                <h:outputText value="Fecha: *"/>
+                                <p:calendar id="fechaPago" value="#{altaventa.pago.fecha}" required="true"
+                                            label="Fecha" showOn="button" navigator="true"
+                                            pattern="dd/MM/yyyy" locale="es"/>
+                            </h:panelGrid>
+                        </p:panel>
+                    </p:tab>
                     <p:tab id="confirmar" title="Confirmación">
                         <p:panel header="Confirmation">
                             <h:panelGrid id="confirmacion" columns="1" columnClasses="grid,grid,grid">
@@ -107,6 +124,14 @@
                                     <h:outputText value="Costo Envio: *"/>
                                     <h:outputText value="#{altaventa.venta.costoEnvio}" styleClass="outputLabel"/>
                                 </h:panelGrid>
+                                <h:panelGrid columns="2" columnClasses="label, value">
+                                    <h:outputText value="Numero Tarjeta: *"/>
+                                    <h:outputText value="#{altaventa.pago.numeroTarjeta}" styleClass="outputLabel"/>
+                                    <h:outputText value="Monto: *"/>
+                                    <h:outputText value="#{altaventa.pago.monto}" styleClass="outputLabel"/>
+                                    <h:outputText value="Fecha: *"/>
+                                    <h:outputText value="#{altaventa.pago.fecha}" styleClass="outputLabel"/>
+                                </h:panelGrid>
                             </h:panelGrid>
                             <p:commandButton value="Salvar" action="#{altaventa.salvar}" update="growl" process="@this"/>
                         </p:panel>
@@ -129,10 +154,6 @@
                                 url="alta-venta.jsf"
                                 action="#{menu.altaVenta}"
                                 icon="/resources/tema1/img/icon/carrito.png"/>
-                    <p:menuitem value="Pago"
-                                url="alta-pago.jsf"
-                                action="#{menu.altaPago}"
-                                icon="/resources/tema1/img/icon/pago.png"/>
                 </p:dock>
             </h:form>
         </div>

@@ -32,6 +32,7 @@ public class AltaVenta implements Serializable {
 
     private Usuario selecionUsuario;
     private Venta venta = new Venta();
+    private Pago pago = new Pago();
 
     @PostConstruct
     public void init() {
@@ -62,6 +63,14 @@ public class AltaVenta implements Serializable {
         this.selecionUsuario = selecionUsuario;
     }
 
+    public Pago getPago() {
+        return pago;
+    }
+
+    public void setPago(Pago pago) {
+        this.pago = pago;
+    }
+
     public Venta getVenta() {
         return venta;
     }
@@ -78,10 +87,12 @@ public class AltaVenta implements Serializable {
             //asignamos venta a usuario
             if (event.getNewStep().equals("Venta")) {
                 this.venta.setUsuario(this.selecionUsuario);
+                this.pago.setVenta(this.venta);
             }
             return event.getNewStep();
         }
     }
+
     public boolean isSkip() {
         return skip;
     }
@@ -126,6 +137,14 @@ public class AltaVenta implements Serializable {
                 .path("salvar")
                 .request(MediaType.APPLICATION_JSON)
                 .post(Entity.json(venta), Venta.class);
+        this.pago.setVenta(nuevaVenta); // set the venta property of Pago to the new Venta object
+        Client cliente2 = ClientBuilder.newClient();
+        WebTarget rootUri2 = cliente2.target("http://localhost:8080/rest-pixup/api/pago/");
+        Entity<Pago> entity2 = Entity.entity(this.pago, MediaType.APPLICATION_JSON);
+        Pago nuevoPago = rootUri2
+                .path("salvar")
+                .request(MediaType.APPLICATION_JSON)
+                .post(Entity.json(this.pago), Pago.class);
 
         FacesMessage msg = new FacesMessage("Venta guardada con éxito");
         FacesContext.getCurrentInstance().addMessage(null, msg);
